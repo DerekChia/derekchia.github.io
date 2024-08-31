@@ -2,13 +2,12 @@
 layout: post
 title:  "An implementation guide to Word2Vec using NumPy and Google Sheets!"
 date:   2018-12-06 00:00:00 +0800
-# categories: main
 ---
 Word2Vec is touted as one of the biggest, most recent breakthrough in the field of Natural Language Processing (NLP). The concept is simple, elegant and (relatively) easy to grasp. A quick Google search returns multiple results on how to use them with standard libraries such as [Gensim](https://radimrehurek.com/gensim/models/word2vec.html) and [TensorFlow](https://www.tensorflow.org/tutorials/representation/word2vec). Also, for the curious minds, check out the original implementation using C by [Tomas Mikolov](https://github.com/tmikolov/word2vec). The original paper can be found [here](https://arxiv.org/pdf/1301.3781.pdf) too.
 
 The main focus on this article is to present Word2Vec in detail. For that, I implemented Word2Vec on Python using NumPy (with much help from other tutorials) and also prepared a Google Sheet to showcase the calculations. Here are the links to the [code](https://github.com/DerekChia/word2vec_numpy) and [Google Sheet](https://docs.google.com/spreadsheets/u/3/d/1mgf82Ue7MmQixMm2ZqnT1oWUucj6pEcd2wDs_JgHmco/edit).
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-1.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/1.png){: width="100%" }
 
 ### Intuition
 
@@ -26,7 +25,7 @@ According to Mikolov (quoted in [this](https://www.quora.com/What-are-the-contin
 
 To elaborate further, since __Skip-gram__ learns to predict the context words from a given word, in case where two words (one appearing infrequently and the other more frequently) are placed side-by-side, both will have the same treatment when it comes to minimising loss since each word will be treated as both the target word and context word. Comparing that to __CBOW__, the infrequent word will only be part of a collection of context words used to predict the target word. Therefore, the model will assign the infrequent word a low probability.
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-2.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/2.png){: width="100%" }
 
 ### Implementation Process
 In this article, we will be implementing the __Skip-gram__ architecture. The content is broken down into the following parts for easy reading:
@@ -77,7 +76,7 @@ settings = {
 __[window_size]__: As mentioned above, context words are words that are neighbouring the target word. But how far or near should these words be in order to be considered neighbour? This is where we define the `window_size` to be 2 which means that words that are 2 to the left and right of the target words are considered context words. Referencing Figure 3 below, notice that each of the word in the corpus will be a target word as the window slides.
 
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-3.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/3.png){: width="100%" }
 
 __[n]__: This is the dimension of the word embedding and it typically ranges from 100 to 300 depending on your vocabulary size. Dimension size beyond 300 tends to [have diminishing benefit](http://www.aclweb.org/anthology/D14-1162) (see page 1538 Figure 2 (a)). Do note that the dimension is also the size of the hidden layer.
 
@@ -88,7 +87,7 @@ __[learning_rate]__: The learning rate controls the amount of adjustment made to
 ## 3. Generate Training Data
 In this section, our main objective is to turn our corpus into a one-hot encoded representation for the Word2Vec model to train on. From our corpus, Figure 4 zooms into each of the 10 windows (#1 to #10) as shown below. Each window consists of both the target word and its context words, highlighted in orange and green respectively.
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-4.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/4.png){: width="100%" }
 
 Example of the first and last element in the first and last training window is shown below:
 
@@ -182,7 +181,7 @@ class word2vec():
 
 ## 4. Model Training
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-5.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/5.png){: width="100%" }
 
 With our `training_data`, we are now ready to train our model. Training starts with `w2v.train(training_data)` where we pass in the training data and call the function `train`.
 
@@ -244,21 +243,21 @@ class word2vec():
 
 I have attached some screenshots to show the calculation for the first training sample in the first window (#1) where the target word is ‘natural’ and context words are ‘language’ and ‘processing’. Feel free to look into the formula in the Google Sheet [here](https://docs.google.com/spreadsheets/d/1mgf82Ue7MmQixMm2ZqnT1oWUucj6pEcd2wDs_JgHmco/edit).
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-6.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/6.png){: width="100%" }
 
 ### Training — Error, Backpropagation and Loss
 
 Error — With `y_pred`, `h` and `u`, we proceed to calculate the error for this particular set of target and context words. This is done by summing up the difference between `y_pred` and each of the context words in `w_c`.
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-7.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/7.png){: width="100%" }
 
 __Backpropagation__ — Next, we use the backpropagation function, `backprop`, to calculate the amount of adjustment we need to alter the weights using the function `backprop` by passing in error `EI`, hidden layer `h` and vector for target word `w_t`.
 
 To update the weights, we multiply the weights to be adjusted (`dl_dw1` and `dl_dw2`) with learning rate and then subtract it from the current weights (`w1` and `w2`).
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-8.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/8.png){: width="100%" }
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-9.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/9.png){: width="100%" }
 
 {% highlight python %}
 class word2vec():
@@ -303,7 +302,7 @@ class word2vec():
 
 __Loss__ — Lastly, we compute the overall loss after finishing each training sample according to the loss function. Take note that the loss function comprises of 2 parts. The first part is the negative of the sum for all the elements in the output layer (before softmax). The second part takes the number of the context words and multiplies the log of sum for all elements (after exponential) in the output layer.
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-10.png){: width="50%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/10.png){: width="50%" }
 
 
 ## 5. Inferencing
@@ -377,7 +376,7 @@ To solve this, below are the two features in Word2Vec you can implement to speed
 
 - [Hierarchical Softmax](https://becominghuman.ai/hierarchical-softmax-as-output-activation-function-in-neural-network-1d19089c4f49) is also another trick to speed up training time replacing the original softmax. The main idea is that instead of evaluating all the output nodes to obtain the probability distribution, we only need to evaluate about log (based 2) of it. It uses a binary tree ([Huffman coding tree](https://en.wikipedia.org/wiki/Huffman_coding)) representation where the nodes in the output layer are represented as leaves and its nodes are represented in relative probabilities to its child nodes.
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-11.png){: width="50%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06/11.png){: width="50%" }
 
 Beyond that, why not try tweaking the code to implement the Continuous Bag-of-Words (CBOW) architecture? 😃
 
