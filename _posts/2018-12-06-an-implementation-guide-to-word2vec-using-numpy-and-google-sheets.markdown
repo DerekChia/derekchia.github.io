@@ -303,7 +303,7 @@ class word2vec():
 
 __Loss__ — Lastly, we compute the overall loss after finishing each training sample according to the loss function. Take note that the loss function comprises of 2 parts. The first part is the negative of the sum for all the elements in the output layer (before softmax). The second part takes the number of the context words and multiplies the log of sum for all elements (after exponential) in the output layer.
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-10.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06-10.png){: width="50%" }
 
 
 ## 5. Inferencing
@@ -377,7 +377,7 @@ To solve this, below are the two features in Word2Vec you can implement to speed
 
 - [Hierarchical Softmax](https://becominghuman.ai/hierarchical-softmax-as-output-activation-function-in-neural-network-1d19089c4f49) is also another trick to speed up training time replacing the original softmax. The main idea is that instead of evaluating all the output nodes to obtain the probability distribution, we only need to evaluate about log (based 2) of it. It uses a binary tree ([Huffman coding tree](https://en.wikipedia.org/wiki/Huffman_coding)) representation where the nodes in the output layer are represented as leaves and its nodes are represented in relative probabilities to its child nodes.
 
-![Image]({{ site.baseurl }}/assets/images/2018-12-06-11.png){: width="100%" }
+![Image]({{ site.baseurl }}/assets/images/2018-12-06-11.png){: width="50%" }
 
 Beyond that, why not try tweaking the code to implement the Continuous Bag-of-Words (CBOW) architecture? 😃
 
