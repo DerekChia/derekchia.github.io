@@ -74,7 +74,7 @@ settings = {
 {% endhighlight %}
 
 
-__[window_size]__: As mentioned above, context words are words that are neighbouring the target word. But how far or near should these words be in order to be considered neighbour? This is where we define the __window_size__ to be 2 which means that words that are 2 to the left and right of the target words are considered context words. Referencing Figure 3 below, notice that each of the word in the corpus will be a target word as the window slides.
+__[window_size]__: As mentioned above, context words are words that are neighbouring the target word. But how far or near should these words be in order to be considered neighbour? This is where we define the `window_size` to be 2 which means that words that are 2 to the left and right of the target words are considered context words. Referencing Figure 3 below, notice that each of the word in the corpus will be a target word as the window slides.
 
 
 ![Image]({{ site.baseurl }}/assets/images/2018-12-06-3.png){: width="100%" }
@@ -106,7 +106,7 @@ Example of the first and last element in the first and last training window is s
 >
 > list([[0, 0, 0, 0, 0, 0, 0, 1, 0], [0, 0, 0, 1, 0, 0, 0, 0, 0]])]
 
-To generate the one-hot training data, we first initialise the __word2vec()__ object and then using the object __w2v__ to call the function __generate_training_data__ by passing __settings__ and __corpus__ as arguments.
+To generate the one-hot training data, we first initialise the `word2vec()` object and then using the object `w2v` to call the function `generate_training_data` by passing `settings` and `corpus` as arguments.
 
 {% highlight python %}
 # Initialise object
@@ -115,13 +115,13 @@ w2v = word2vec()
 training_data = w2v.generate_training_data(settings, corpus)
 {% endhighlight %}
 
-Inside the function __generate_training_data__, we performed the following operations:
+Inside the function `generate_training_data`, we performed the following operations:
 
 1. __self.v_count__ — Length of vocabulary (note that vocabulary refers to the number of unique words in the corpus)
 2. __self.words_list__ — List of words in vocabulary
 3. __self.word_index__ — Dictionary with each key as word in vocabulary and value as index
 4. __self.index_word__ — Dictionary with each key as index and value as word in vocabulary
-5. __for__ loop to append one-hot representation for each target and its context words to __training_data__ using __word2onehot__ function.
+5. __for__ loop to append one-hot representation for each target and its context words to `training_data` using `word2onehot` function.
 
 {% highlight python %}
 class word2vec():
@@ -184,9 +184,9 @@ class word2vec():
 
 ![Image]({{ site.baseurl }}/assets/images/2018-12-06-5.png){: width="100%" }
 
-With our __training_data__, we are now ready to train our model. Training starts with __w2v.train(training_data)__ where we pass in the training data and call the function __train__.
+With our `training_data`, we are now ready to train our model. Training starts with `w2v.train(training_data)` where we pass in the training data and call the function `train`.
 
-The Word2Vec model consists of 2 weight matrices (__w1__ and __w2__) and for demo purposes, we have initialised the values to a shape of (9x10) and (10x9) respectively. This facilitates the calculation of backpropagation error which will be covered later in the article. In the actual training, you should randomly initialise the weights (e.g. using np.__random.uniform()__). To do that, comment line 9 and 10 and uncomment line 11 and 12.
+The Word2Vec model consists of 2 weight matrices (`w1` and `w2`) and for demo purposes, we have initialised the values to a shape of (9x10) and (10x9) respectively. This facilitates the calculation of backpropagation error which will be covered later in the article. In the actual training, you should randomly initialise the weights (e.g. using np.`random.uniform()`). To do that, comment line 9 and 10 and uncomment line 11 and 12.
 
 
 {% highlight python %}
@@ -206,7 +206,7 @@ class word2vec():
 
 ### Training — Forward Pass
 
-Next, we start training our first epoch using the first training example by passing in __w_t__ which represents the one-hot vector for target word to the __forward_pass__ function. In the __forward_pass__ function, we perform a dot product between __w1__ and __w_t__ to produce __h__ (Line 24). Then, we perform another dot product using __w2__ and __h__ to produce the output layer __u__ (Line 26). Lastly, we run __u__ through __softmax__ to force each element to the range of 0 and 1 to give us the probabilities for prediction (Line 28) before returning the vector for prediction __y_pred__, hidden layer __h__ and output layer __u__.
+Next, we start training our first epoch using the first training example by passing in `w_t` which represents the one-hot vector for target word to the `forward_pass` function. In the `forward_pass` function, we perform a dot product between `w1` and `w_t` to produce `h` (Line 24). Then, we perform another dot product using `w2` and `h` to produce the output layer `u` (Line 26). Lastly, we run `u` through `softmax` to force each element to the range of 0 and 1 to give us the probabilities for prediction (Line 28) before returning the vector for prediction `y_pred`, hidden layer `h` and output layer `u`.
 
 {% highlight python %}
 class word2vec():
@@ -248,13 +248,13 @@ I have attached some screenshots to show the calculation for the first training 
 
 ### Training — Error, Backpropagation and Loss
 
-Error — With __y_pred__, __h__ and __u__, we proceed to calculate the error for this particular set of target and context words. This is done by summing up the difference between __y_pred__ and each of the context words in __w_c__.
+Error — With `y_pred`, `h` and `u`, we proceed to calculate the error for this particular set of target and context words. This is done by summing up the difference between `y_pred` and each of the context words in `w_c`.
 
 ![Image]({{ site.baseurl }}/assets/images/2018-12-06-7.png){: width="100%" }
 
-__Backpropagation__ — Next, we use the backpropagation function, __backprop__, to calculate the amount of adjustment we need to alter the weights using the function __backprop__ by passing in error __EI__, hidden layer __h__ and vector for target word __w_t__.
+__Backpropagation__ — Next, we use the backpropagation function, `backprop`, to calculate the amount of adjustment we need to alter the weights using the function `backprop` by passing in error `EI`, hidden layer `h` and vector for target word `w_t`.
 
-To update the weights, we multiply the weights to be adjusted (__dl_dw1__ and __dl_dw2__) with learning rate and then subtract it from the current weights (__w1__ and __w2__).
+To update the weights, we multiply the weights to be adjusted (`dl_dw1` and `dl_dw2`) with learning rate and then subtract it from the current weights (`w1` and `w2`).
 
 ![Image]({{ site.baseurl }}/assets/images/2018-12-06-8.png){: width="100%" }
 
@@ -300,3 +300,89 @@ class word2vec():
     self.w1 = self.w1 - (self.lr * dl_dw1)
     self.w2 = self.w2 - (self.lr * dl_dw2)
 {% endhighlight %}
+
+__Loss__ — Lastly, we compute the overall loss after finishing each training sample according to the loss function. Take note that the loss function comprises of 2 parts. The first part is the negative of the sum for all the elements in the output layer (before softmax). The second part takes the number of the context words and multiplies the log of sum for all elements (after exponential) in the output layer.
+
+![Image]({{ site.baseurl }}/assets/images/2018-12-06-10.png){: width="100%" }
+
+
+## 5. Inferencing
+Now that we have completed training for 50 epochs, both weights (w1 and w2) are now ready to perform inference.
+
+### Getting Vector for a Word
+With a trained set of weights, the first thing we can do is to look at the word vector for a word in the vocabulary. We can simply do this by looking up the index of the word against the trained weight (`w1`). In the following example, we look up the vector for the word “machine”.
+
+{% highlight python %}
+# Get vector for word
+vec = w2v.word_vec("machine")
+
+class word2vec():
+  ## Removed ##
+  
+  # Get vector from word
+  def word_vec(self, word):
+    w_index = self.word_index[word]
+    v_w = self.w1[w_index]
+    return v_w
+{% endhighlight %}
+
+### Find similar words
+Another thing we can do is to find similar words. Even though our vocabulary is small, we can still implement the function `vec_sim` by computing the [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) between words.
+
+
+{% highlight python %}
+# Find similar words
+w2v.vec_sim("machine", 3)
+
+class word2vec():
+  ## Removed##
+  
+  # Input vector, returns nearest word(s)
+  def vec_sim(self, word, top_n):
+    v_w1 = self.word_vec(word)
+    word_sim = {}
+
+    for i in range(self.v_count):
+      # Find the similary score for each word in vocab
+      v_w2 = self.w1[i]
+      theta_sum = np.dot(v_w1, v_w2)
+      theta_den = np.linalg.norm(v_w1) * np.linalg.norm(v_w2)
+      theta = theta_sum / theta_den
+
+      word = self.index_word[i]
+      word_sim[word] = theta
+
+    words_sorted = sorted(word_sim.items(), key=lambda kv: kv[1], reverse=True)
+
+    for word, sim in words_sorted[:top_n]:
+      print(word, sim)
+{% endhighlight %}
+
+
+> $ w2v.vec_sim("machine", 3)
+>
+> machine 1.0
+>
+> fun 0.6223490454018772
+>
+> and 0.5190154215400249
+
+## 6. Further improvements
+If you are still reading the article, well done and thank you! But this is not the end. As you might have noticed in the backpropagation step above, we are required to adjust the weights for all other words that were not involved in the training sample. This process can take up a long time if the size of your vocabulary is large (e.g. tens of thousands).
+
+To solve this, below are the two features in Word2Vec you can implement to speed things up:
+
+- [Skip-gram Negative Sampling (SGNS)](http://mccormickml.com/2017/01/11/word2vec-tutorial-part-2-negative-sampling/) helps to speed up training time and improve quality of resulting word vectors. This is done by training the network to only modify a small percentage of the weights rather than all of them. Recall in our example above, we update the weights for every other word and this can take a very long time if the vocab size is large. With SGNS, we only need to update the weights for the target word and a small number (e.g. 5 to 20) of random ‘negative’ words.
+
+
+- [Hierarchical Softmax](https://becominghuman.ai/hierarchical-softmax-as-output-activation-function-in-neural-network-1d19089c4f49) is also another trick to speed up training time replacing the original softmax. The main idea is that instead of evaluating all the output nodes to obtain the probability distribution, we only need to evaluate about log (based 2) of it. It uses a binary tree ([Huffman coding tree](https://en.wikipedia.org/wiki/Huffman_coding)) representation where the nodes in the output layer are represented as leaves and its nodes are represented in relative probabilities to its child nodes.
+
+![Image]({{ site.baseurl }}/assets/images/2018-12-06-11.png){: width="100%" }
+
+Beyond that, why not try tweaking the code to implement the Continuous Bag-of-Words (CBOW) architecture? 😃
+
+## Conclusion
+This article is an introduction to Word2Vec and into the world of word embedding. It is also worth noting that there are pre-trained embeddings available such as GloVe, fastText and ELMo where you can download and use directly. There are also extensions of Word2Vec such as Doc2Vec and the most recent Code2Vec where documents and codes are turned into vectors. 😉
+
+Lastly, I want to thank to Ren Jie Tan, Raimi and Yuxin for taking time to comment and read the drafts of this. 💪
+
