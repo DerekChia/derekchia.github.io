@@ -13,8 +13,8 @@
   {{ page.head_inline }}
   {% endif %}
 
-  {% if jekyll.environment == 'production' and site.google_analytics %}
-  {% include google-analytics.html %}
+  {% if jekyll.environment == 'production' %}
+  {% include analytics.html %}
   {% endif %}
 
   {% seo %}
