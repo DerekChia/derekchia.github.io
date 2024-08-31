@@ -31,7 +31,10 @@ github_username:  derekchia
 # theme: minima
 remote_theme: aterenin/minima-reboot
 plugins:
+  - jekyll-seo-tag
+  - jekyll-paginate
   - jekyll-feed
+  - jekyll-redirect-from
 
 header_pages:
   - index.md
