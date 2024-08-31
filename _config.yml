@@ -30,15 +30,20 @@ github_username:  derekchia
 # Build settings
 # theme: minima
 remote_theme: aterenin/minima-reboot
+
 plugins:
   - jekyll-seo-tag
   - jekyll-paginate
   - jekyll-feed
   - jekyll-redirect-from
 
+minima_reboot:
+  date_format: "%b %-d, %Y"
+  date_format_short: "%b %-d"
+
 header_pages:
-  - index.md
   - about.md
+  - posts.md
 
 # Exclude from processing.
 # The following items will not be processed, by default.
