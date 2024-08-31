@@ -7,3 +7,7 @@ bundle exec jekyll serve
 ```
 git add . && git commit -m "update" && git push origin main
 ```
+
+### References
+- https://github.com/aterenin/minima-reboot
+- https://github.com/jekyll/minima
