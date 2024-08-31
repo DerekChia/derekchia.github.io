@@ -387,7 +387,7 @@ This article is an introduction to Word2Vec and into the world of word embedding
 Lastly, I want to thank to [Ren Jie Tan](https://medium.com/u/fdf264797c2a), [Raimi](https://twitter.com/remykarem) and [Yuxin](https://seowyuxin.com/) for taking time to comment and read the drafts of this. 💪
 
 ## References
-1. https://github.com/nathanrooy/word2vec-from-scratch-with-python
-2. https://nathanrooy.github.io/posts/2018-03-22/word2vec-from-scratch-with-python-and-numpy/
-3. https://stats.stackexchange.com/questions/325053/why-word2vec-maximizes-the-cosine-similarity-between-semantically-similar-words
-4. https://towardsdatascience.com/hierarchical-softmax-and-negative-sampling-short-notes-worth-telling-2672010dbe08
+1. [https://github.com/nathanrooy/word2vec-from-scratch-with-python](https://github.com/nathanrooy/word2vec-from-scratch-with-python)
+2. [https://nathanrooy.github.io/posts/2018-03-22/word2vec-from-scratch-with-python-and-numpy/](https://nathanrooy.github.io/posts/2018-03-22/word2vec-from-scratch-with-python-and-numpy/)
+3. [https://stats.stackexchange.com/questions/325053/why-word2vec-maximizes-the-cosine-similarity-between-semantically-similar-words](https://stats.stackexchange.com/questions/325053/why-word2vec-maximizes-the-cosine-similarity-between-semantically-similar-words)
+4. [https://towardsdatascience.com/hierarchical-softmax-and-negative-sampling-short-notes-worth-telling-2672010dbe08](https://towardsdatascience.com/hierarchical-softmax-and-negative-sampling-short-notes-worth-telling-2672010dbe08)
