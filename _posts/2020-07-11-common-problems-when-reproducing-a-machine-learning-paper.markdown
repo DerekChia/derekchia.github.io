@@ -2,7 +2,7 @@
 layout: post
 title:  "Common Problems When Reproducing A Machine Learning Paper"
 date:   2020-07-11 00:00:00 +0800
-# categories: main
+categories: main
 ---
 
 When I first stepped into the field of machine learning, I spent quite a large amount of time on reading papers and trying to implement them. Of course, I was no genius and by implementing I meant `git clone` and trying to run the authors' code. For concepts that interests me, I'd also type out the code and annotate them to get a better understanding. I imagine many others to have the similar journey when starting out.

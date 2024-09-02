@@ -2,7 +2,7 @@
 layout: post
 title:  "The Guide to Docker ARG, ENV and .env"
 date:   2020-12-27 00:00:00 +0800
-# categories: main
+categories: main
 ---
 
 Many times, developers have been left scratching their heads figuring out the best way to pass in variables at different stages of development and deployment. I, myself, are guilty of that. To solve this once and for all, I decided to experiment and note down my observations in this article. 🤗

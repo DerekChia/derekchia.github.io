@@ -2,7 +2,7 @@
 layout: post
 title:  "Web Scalability for Startup Engineers — Book Review and Takeaways"
 date:   2018-11-09 00:00:00 +0800
-# categories: main
+categories: main
 ---
 
 In this article, I will summarize the important concepts from each chapter of this book and bring out the crux of what you need to know in 15 minutes. There are also additional links to keywords to help you research further.
