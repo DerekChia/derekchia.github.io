@@ -106,6 +106,110 @@ Use completement with `-c` to inverse the deleted characters
 
 ### sort
 
+Sort a file, arrange record in particular order. Sorts file assuming contents are ASCII. 
+
+-r : Sorts data in reverse order, descending
+-k : Sorts table based on specific column number
+-c : Check if file is already sorted and reports disorder
+-u : Sorts and removes duplicate lines, providing unique sorted list
+-R : Sorts by random hash of keys but groups identical keys together
+-n : Sorts numeric fields by arithmetic value. A numeric field may contain leading blanks, an optional minus sign, decimal digits, thousands-separator characters, and an optional radix character. Numeric sorting of a field containing any nonnumeric character gives unpredictable results.
+-d : Sorts using dictionary order. Only letters, digits, and spaces are considered in comparisons.
+-M : Sorts by months (Jan-Dec)
+
+Sort alphabetically, by default
+
+```
+❯ sort number_string
+five
+four
+one
+three
+two
+```
+
+And in reverse order, using `-r`
+
+```
+❯ sort -r number_string
+two
+three
+one
+four
+five
+```
+
+Sort by the 3rd column using `-k`
+
+```
+❯ paste number alphabet number_string
+1	a	one
+2	b	two
+3	c	three
+4	d	four
+5	e	five
+❯ paste number alphabet number_string | sort -k3
+5	e	five
+4	d	four
+1	a	one
+3	c	three
+2	b	two
+```
+
+Check for sorting disorder using `-c`
+
+```
+❯ seq 5 | sort -r
+5
+4
+3
+2
+1
+❯ seq 5 | sort -r | sort -c
+sort: -:2: disorder: 4
+```
+
+Sort and remove duplicates using `-u`
+
+```
+❯ seq 2 | cat - <(seq 2) | sort -r
+2
+2
+1
+1
+❯ seq 2 | cat - <(seq 2) | sort -r | sort -u
+1
+2
+```
+
+Sort by random hash of keys but groups identical keys together using `-R`
+```
+❯ seq 3 | cat - <(seq 3) | sort -R
+2
+2
+3
+3
+1
+1
+```
+
+Sort by months (Jan-Dec), using `-M`, and using `-k2` to reference 2nd column
+
+```
+❯ paste number months
+1	Mar
+2	Dec
+3	Jan
+4	Aug
+5	Feb
+❯ paste number months | sort -k2M
+3	Jan
+5	Feb
+1	Mar
+4	Aug
+2	Dec
+```
+
 ### comm
 
 ### uniq
