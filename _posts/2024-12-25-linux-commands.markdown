@@ -9,6 +9,91 @@ Useful Linux commands. Covering `grep`, `tr`, `awk`, `sed`, `sort`, `comm`, `uni
 
 ### grep
 
+Initial data, using `-v` to invert empty string and show everything between start `^` and end `$`
+```
+❯ grep -v '^$' location
+United States
+SINGAPORE
+Malaysia
+Papua New Guinea
+South Korea
+```
+
+Find lines that match start and end using `^` and `$`
+```
+❯ grep '^South' location
+South Korea
+❯ grep 'Korea$' location
+South Korea
+```
+
+Case insensitive search, using `-i`
+```
+❯ grep -i 'singapore' location
+SINGAPORE
+```
+
+Count matches, case insensitive, using `-c`
+```
+❯ grep -ci 'singapore' location
+1
+```
+
+Display file names that match pattern, case insensitive, using `-l`
+```
+❯ grep -li 'singapore' *
+location
+```
+
+Look for the whole word in file. To search through all files and display result, use `*`. Add `-n` to show line number
+```
+❯ grep -wi 'singapore' *
+location:SINGAPORE
+
+❯ grep -nwi 'singapore' *
+location:2:SINGAPORE
+
+❯ grep -wi 'singapore' location
+SINGAPORE
+```
+
+Invert result of pattern match, using `-v`
+```
+❯ grep -i 's' location
+United States
+SINGAPORE
+Malaysia
+South Korea
+
+❯ grep -vi 's' location
+Papua New Guinea
+```
+
+Show lines after, before, or before+after a pattern match, using `-A`, followed by the number of lines to display. 
+
+```
+❯ grep -A1 '^Malay' location
+Malaysia
+Papua New Guinea
+
+❯ grep -B1 '^Malay' location
+SINGAPORE
+Malaysia
+
+❯ grep -C1 '^Malay' location
+SINGAPORE
+Malaysia
+Papua New Guinea
+```
+
+Search recursively for a pattern in the directory
+
+```
+❯ grep -iR 'singapore' .
+./location:SINGAPORE
+```
+
+
 ### tr
 
 Used for translating or deleting characters. Supports transformations such as uppercase to lowercase, squeezing repeating characters, deleting specific characters and basic find and replace. 
@@ -104,10 +189,13 @@ Use completement with `-c` to inverse the deleted characters
 
 ### sed
 
+
+
 ### sort
 
 Sort a file, arrange record in particular order. Sorts file assuming contents are ASCII. 
 
+```
 -r : Sorts data in reverse order, descending
 -k : Sorts table based on specific column number
 -c : Check if file is already sorted and reports disorder
@@ -116,6 +204,7 @@ Sort a file, arrange record in particular order. Sorts file assuming contents ar
 -n : Sorts numeric fields by arithmetic value. A numeric field may contain leading blanks, an optional minus sign, decimal digits, thousands-separator characters, and an optional radix character. Numeric sorting of a field containing any nonnumeric character gives unpredictable results.
 -d : Sorts using dictionary order. Only letters, digits, and spaces are considered in comparisons.
 -M : Sorts by months (Jan-Dec)
+```
 
 Sort alphabetically, by default
 
