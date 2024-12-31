@@ -36,6 +36,68 @@ singapore
 malaysia
 papua new guinea
 south korea
+
+❯ cat location | tr '[a-z]' '[A-Z]'
+UNITED STATES
+SINGAPORE
+MALAYSIA
+PAPUA NEW GUINEA
+SOUTH KOREA
+```
+
+Translate whitespaces into tables. Use `[:space:]` if you want to match any whitespace character, including spaces, tabs, newlines, etc.
+
+```
+❯ cat location | tr ' ' '\t'
+United	States
+SINGAPORE
+Malaysia
+Papua	New	Guinea
+South	Korea
+
+❯ cat location | tr '[:space:]' '\t'
+United	States	SINGAPORE	Malaysia	Papua	New	Guinea	South	Korea	%
+```
+
+Translate characters into other character
+```
+❯ cat location | tr 'SE' '*'
+United *tates
+*INGAPOR*
+Malaysia
+Papua New Guinea
+*outh Korea
+```
+
+Remove repetitive characters using `-s`
+
+```
+❯ echo "Sentence    with  too many   spaces" | tr -s " "
+Sentence with too many spaces
+```
+
+Delete specified characters using `-d`
+
+```
+❯ echo "Sentence    with  too many   spaces" | tr -s " " | tr -d e
+Sntnc with too many spacs
+```
+
+Delete digits
+
+```
+❯ echo "My number is 1234 5588" | tr -d '[:digit:]'
+My number is
+
+❯ echo "My number is 1234 5588" | tr -d '0-9'
+My number is
+```
+
+Use completement with `-c` to inverse the deleted characters 
+
+```
+❯ echo "My number is 1234 5588" | tr -cd '[:digit:]'
+12345588%
 ```
 
 ### awk
